@@ -55,6 +55,13 @@ class RemoteWithLocalFallbackFeedLoader : FeedLoader {
     var remoteLoader: RemoteFeedLoader!
     var localloader: LocalFeedLoader!
     
+    
+    convenience init(remoteLoader: RemoteFeedLoader, localLoader: LocalFeedLoader) {
+        self.init()
+        self.remoteLoader = remoteLoader
+        self.localloader = localLoader
+    }
+    
     func loadFeed(compltion: @escaping ([String]) -> Void) {
         /*
         if Reachibilty.isReachable {
@@ -68,3 +75,13 @@ class RemoteWithLocalFallbackFeedLoader : FeedLoader {
     }
  
 }
+
+
+/*
+ usage
+ */
+
+
+let vc = FeedViewController(loader: RemoteFeedLoader())
+let vc1 = FeedViewController(loader: LocalFeedLoader())
+let vc2 = FeedViewController(loader: RemoteWithLocalFallbackFeedLoader(remoteLoader: RemoteFeedLoader(), localLoader: LocalFeedLoader()))
