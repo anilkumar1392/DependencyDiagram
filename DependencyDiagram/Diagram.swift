@@ -33,3 +33,38 @@ class FeedViewController: UIViewController {
         }
     }
 }
+
+/*
+  NOw someone who implements feedloader.
+ */
+// Data loaded form server
+class RemoteFeedLoader: FeedLoader {
+    func loadFeed(compltion: @escaping ([String]) -> Void) {
+        // do something
+    }
+}
+
+// Data loaded form Local
+class LocalFeedLoader: FeedLoader {
+    func loadFeed(compltion: @escaping ([String]) -> Void) {
+        // do something
+    }
+}
+
+class RemoteWithLocalFallbackFeedLoader : FeedLoader {
+    var remoteLoader: RemoteFeedLoader!
+    var localloader: LocalFeedLoader!
+    
+    func loadFeed(compltion: @escaping ([String]) -> Void) {
+        /*
+        if Reachibilty.isReachable {
+            remoteLoader.loadFeed(compltion: compltion)
+        } else {
+            localloader.loadFeed(compltion: compltion)
+        }*/
+        
+        let load = Reachibilty.isReachable ? remoteLoader.loadFeed : localloader.loadFeed
+        load(compltion)
+    }
+ 
+}
